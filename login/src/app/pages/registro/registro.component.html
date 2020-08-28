@@ -1,38 +1,58 @@
 <div class="limiter">
         <div class="container-login100">
             <div class="wrap-login100 p-t-50 p-b-90">
-                <form class="login100-form validate-form flex-sb flex-w">
+                <form class="login100-form validate-form flex-sb flex-w" (ngSubmit)="signUp(form)" #form="ngForm">
     
                     <span class="login100-form-title p-b-51">
                         Crear nueva cuenta
                     </span>
     
-                    <!-- <span class="text-danger">El correo es obligatorio</span> -->
+                    <span class="text-danger" *ngIf="form.submitted && form.controls['email'].errors">El correo es obligatorio</span>
+                    <span class="text-danger" *ngIf="form.submitted && mailAlreadyExists">Este email ya está registrado</span>
                     <div class="wrap-input100 m-b-16">
                         <input class="input100" 
-                               type="text" 
+                               type="email" 
                                name="email" 
-                               placeholder="Email">
+                               placeholder="Email"
+                               [(ngModel)]="user.email"
+                               minlength="5"
+                               required>
     
                         <span class="focus-input100"></span>
                     </div>
 
-                    <!-- <span class="text-danger">El nombre es obligatorio</span> -->
+                    <span class="text-danger" *ngIf="form.submitted && form.controls['name'].errors">El nombre es obligatorio</span>
                     <div class="wrap-input100 m-b-16">
                         <input class="input100" 
                                type="text" 
-                               name="nombre" 
-                               placeholder="Nombre y apellidos">
+                               name="name" 
+                               placeholder="Nombre"
+                               [(ngModel)]="user.name"
+                               required
+                               minlength="3">
+    
+                        <span class="focus-input100"></span>
+                    </div>
+
+                    <div class="wrap-input100 m-b-16">
+                        <input class="input100" 
+                               type="text" 
+                               name="surname" 
+                               placeholder="Apellidos"
+                               [(ngModel)]="user.surname">
     
                         <span class="focus-input100"></span>
                     </div>
                     
-                    <!-- <span class="text-danger">La contraseña debe de ser más de 6 letras</span> -->
+                    <span class="text-danger" *ngIf="form.submitted && form.controls['password'].errors">La contraseña debe de ser más de 6 letras</span>
                     <div class="wrap-input100 m-b-16" data-validate = "Password is required">
                         <input class="input100"
                                type="password" 
-                               name="pass" 
-                               placeholder="Password">
+                               name="password" 
+                               placeholder="Password"
+                               [(ngModel)]="user.password"
+                               required
+                               minlength="6">
                         <span class="focus-input100"></span>
                     </div>
                     
@@ -45,7 +65,7 @@
                         </div>
     
                         <div>
-                            <a routerLink="/registro" class="txt1">
+                            <a routerLink="/login" class="txt1">
                                 ¿Ya tienes cuenta? / Ingresar
                             </a>
                         </div>
