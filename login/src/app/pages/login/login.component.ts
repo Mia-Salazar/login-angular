@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router'
 import { User } from '../../models/usuario.model'
 import { NgForm, EmailValidator } from '@angular/forms'
 import { AuthService } from '../../services/auth.service'
@@ -14,7 +15,7 @@ export class LoginComponent implements OnInit {
   invalidEmail = false
   rememberMe = false
 
-  constructor(private auth: AuthService) { 
+  constructor(private auth: AuthService, private router:Router) { 
     if (localStorage.getItem('email')) {
       this.user.email = localStorage.getItem('email')
       this.rememberMe = true
@@ -36,6 +37,7 @@ export class LoginComponent implements OnInit {
           if (this.rememberMe = true) {
             localStorage.setItem('email', this.user.email)
           }
+          this.router.navigateByUrl('/home')
           console.log(resp)
         }, e => {
 
